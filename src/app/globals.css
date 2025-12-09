@@ -4,19 +4,19 @@
 
 @layer base {
   :root {
-    --background: 217 60% 94.3%; /* #E6EEF9 */
+    --background: 220 40% 97%; /* Lighter gray-blue */
     --foreground: 220 25% 25%;
     --card: 0 0% 100%;
     --card-foreground: 220 25% 25%;
     --popover: 0 0% 100%;
     --popover-foreground: 220 25% 25%;
-    --primary: 212 100% 31%; /* #00479D */
+    --primary: 212 99% 33%; /* #0154A7 */
     --primary-foreground: 0 0% 98%;
     --secondary: 217 60% 90%;
     --secondary-foreground: 220 25% 25%;
     --muted: 217 30% 88%;
     --muted-foreground: 220 15% 45%;
-    --accent: 212 100% 41%; /* #0061D1 */
+    --accent: 212 100% 41%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
@@ -111,5 +111,25 @@
   }
   .no-print {
     display: none !important;
+  }
+}
+
+/* Custom styles from Figma */
+@layer components {
+  .invoice-header-bg {
+    background: linear-gradient(88.43deg, #FFFFFF 5.81%, rgba(1, 84, 167, 0.2) 56.46%, rgba(1, 84, 167, 0.9) 75.91%, #0154A7 132.51%);
+  }
+  .invoice-footer-bg {
+    background: linear-gradient(90.39deg, #0154A7 0.34%, #002141 103.25%);
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25), inset 0px 4px 4px #034B93;
+  }
+  .inter-tight {
+    font-family: 'Inter Tight', sans-serif;
+  }
+}
+
+@layer base {
+  body {
+    background-color: #F7F7F7;
   }
 }

@@ -15,10 +15,10 @@ interface InvoicePreviewProps {
   data: Invoice;
 }
 
-const ITEMS_PER_PAGE = 10;
+const ITEMS_PER_PAGE = 8; // Adjusted to fit new design
 
 export default function InvoicePreview({ data }: InvoicePreviewProps) {
-  const { from, to, invoiceNumber, invoiceDate, items = [], amountPaid = 0 } = data;
+  const { from, to, invoiceNumber, invoiceDate, dueDate, items = [], amountPaid = 0, taxRate = 0, discountRate = 0 } = data;
 
   const itemChunks: typeof items[] = [];
   if (items.length > 0) {
@@ -30,55 +30,81 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
   }
 
   const subtotal = items.reduce((acc, item) => acc + (item.quantity || 0) * (item.rate || 0), 0);
-  const total = subtotal - amountPaid;
+  const taxAmount = subtotal * (taxRate / 100);
+  const discountAmount = subtotal * (discountRate / 100);
+  const total = subtotal + taxAmount - discountAmount;
+  const amountDue = total - amountPaid;
 
   const renderPage = (chunk: typeof items, pageIndex: number, isLastPage: boolean) => (
-    <Card key={pageIndex} className="w-[794px] min-h-[1123px] mx-auto bg-card shadow-lg print-page flex flex-col relative overflow-hidden font-sans">
-      <HeaderWave className="absolute top-0 left-0 w-full h-auto" />
-      <header className="flex justify-between items-start p-12 z-10">
-        <div className="flex items-center gap-4">
+    <Card key={pageIndex} className="w-[595px] h-[842px] mx-auto bg-[#F7F7F7] shadow-lg print-page flex flex-col relative overflow-hidden font-sans">
+      <HeaderWave />
+      <header className="flex justify-between items-start pt-[23px] px-[29px] z-10">
+        <div className="flex items-center gap-1">
           <Logo />
         </div>
-        <div className="text-right text-white">
-          <h2 className="text-4xl font-bold uppercase tracking-wider">INVOICE</h2>
-          <p className="font-semibold mt-2 text-lg">#{invoiceNumber}</p>
-          <div className="flex items-center justify-end gap-2 mt-4 text-sm">
-            <MapPin size={14} />
-            <p className="whitespace-pre-wrap max-w-[200px]">{from?.address}</p>
+        <div className="text-right">
+          <div className="flex flex-col items-end gap-4">
+            <div className="flex flex-col items-end gap-1">
+              <h2 className="text-xl font-semibold uppercase text-white tracking-wide">Invoice</h2>
+              <p className="font-medium text-sm text-white">#{invoiceNumber}</p>
+            </div>
+            <div className="flex items-start gap-1.5">
+              <MapPin size={14} className="text-white/80 mt-0.5" />
+              <div className="text-right">
+                <p className="text-xs font-medium text-[#E9EAEB] whitespace-pre-wrap max-w-[119px]">{from?.address}</p>
+              </div>
+            </div>
           </div>
         </div>
       </header>
 
-      <section className="px-12 mt-16 mb-8 z-10">
-        <div className="grid grid-cols-2 gap-8">
+      <section className="px-[29px] mt-[89px] mb-8 z-10">
+        <div className="grid grid-cols-2">
             <div>
-              <p className="text-gray-500 mb-2">{invoiceDate ? format(new Date(invoiceDate), 'MMMM dd, yyyy') : ''}</p>
-              <h3 className="text-sm font-semibold uppercase text-primary mb-2">Bill To</h3>
-              <p className="font-bold text-lg">{to?.name || 'Client Name'}</p>
-              <p className="text-gray-600 whitespace-pre-wrap">{to?.address}</p>
+              <p className="text-xs font-medium text-[#3A3A3A] mb-2.5">{invoiceDate ? format(new Date(invoiceDate), 'MMMM dd, yyyy') : ''}</p>
+              <div className="flex gap-2">
+                <h3 className="text-xs font-medium text-[#0554A7]">Bill To :</h3>
+                <div className='flex flex-col gap-1'>
+                  <p className="font-semibold text-[10px] text-[#3A3A3A]">{to?.name || 'Client Name'}</p>
+                  <p className="text-[10px] text-[#313131] whitespace-pre-wrap leading-3">{to?.address}</p>
+                </div>
+              </div>
             </div>
         </div>
       </section>
 
-      <section className="flex-grow px-12 z-10">
+      <section className="flex-grow px-[24px] z-10">
         <Table>
           <TableHeader>
-            <TableRow className="bg-primary hover:bg-primary">
-              <TableHead className="text-white w-[150px]">Confirmation</TableHead>
-              <TableHead className="text-white w-2/5">Product Name</TableHead>
-              <TableHead className="text-white text-right">Unit Cost</TableHead>
-              <TableHead className="text-white text-right">Qty</TableHead>
-              <TableHead className="text-white text-right">Amount</TableHead>
+            <TableRow className="bg-[#0154A7] hover:bg-[#0154A7] border-none">
+              <TableHead className="text-white text-[10px] font-medium w-[96px] h-[36px] text-center border-r border-[#0D5CAA]">Confirmation</TableHead>
+              <TableHead className="text-white text-[10px] font-medium w-[217.5px] h-[36px] px-6 border-r border-[#0D5CAA]">Product Name</TableHead>
+              <TableHead className="text-white text-[10px] font-medium w-[78px] h-[36px] text-center border-r border-[#0D5CAA]">Unit Cost</TableHead>
+              <TableHead className="text-white text-[10px] font-medium w-[78px] h-[36px] text-center border-r border-[#0D5CAA]">Qty</TableHead>
+              <TableHead className="text-white text-[10px] font-medium w-[78px] h-[36px] text-center">Amount</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {chunk.map((item, index) => (
-              <TableRow key={index}>
-                <TableCell className="font-medium bg-blue-50/50">{item.confirmation}</TableCell>
-                <TableCell className="whitespace-pre-wrap">{item.description}</TableCell>
-                <TableCell className="text-right">{formatCurrency(item.rate)}</TableCell>
-                <TableCell className="text-right">{item.quantity}</TableCell>
-                <TableCell className="text-right font-medium">{formatCurrency(item.quantity * item.rate)}</TableCell>
+              <TableRow key={index} className='border-b border-[#BEDFFF]'>
+                <TableCell className="text-[10px] font-medium text-[#414141] text-center align-top p-2 border-x border-[#BEDFFF] h-[80px]">{item.confirmation}</TableCell>
+                <TableCell className="text-[10px] font-medium text-[#414141] align-top p-2 border-r border-[#BEDFFF] whitespace-pre-wrap">
+                  <div>{item.description}</div>
+                  <div className="text-[#4A5565] font-normal">{/* Placeholder for second line from figma */}</div>
+                </TableCell>
+                <TableCell className="text-[10px] font-medium text-[#414141] text-center align-top p-2 border-r border-[#BEDFFF]">{formatCurrency(item.rate)}</TableCell>
+                <TableCell className="text-[10px] font-medium text-[#414141] text-center align-top p-2 border-r border-[#BEDFFF]">{item.quantity}</TableCell>
+                <TableCell className="text-[10px] font-medium text-[#414141] text-center align-top p-2 border-r border-[#BEDFFF]">{formatCurrency(item.quantity * item.rate)}</TableCell>
+              </TableRow>
+            ))}
+             {/* Fill empty rows to maintain height */}
+            {Array.from({ length: ITEMS_PER_PAGE - chunk.length }).map((_, index) => (
+              <TableRow key={`empty-${index}`} className="border-b border-[#BEDFFF]">
+                <TableCell className="h-[80px] p-2 border-x border-[#BEDFFF]"></TableCell>
+                <TableCell className="h-[80px] p-2 border-r border-[#BEDFFF]"></TableCell>
+                <TableCell className="h-[80px] p-2 border-r border-[#BEDFFF]"></TableCell>
+                <TableCell className="h-[80px] p-2 border-r border-[#BEDFFF]"></TableCell>
+                <TableCell className="h-[80px] p-2 border-r border-[#BEDFFF]"></TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -86,32 +112,52 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
       </section>
       
       {isLastPage && (
-         <section className="mt-8 px-12 pb-32 z-10">
+         <section className="mt-auto px-[24px] pb-[90px] z-10">
           <div className="flex justify-end">
-            <div className="w-1/2">
-                <div className="flex justify-between items-center py-2">
-                    <span className="text-gray-600">Amount Paid</span>
-                    <span>-{formatCurrency(amountPaid)}</span>
-                </div>
-                <div className="flex justify-between items-center bg-primary text-white p-3 rounded-md mt-2">
-                    <span className="font-bold text-lg">Amount Due</span>
-                    <span className="font-bold text-lg">{formatCurrency(total)}</span>
-                </div>
+            <div className="w-[233px]">
+              <div className="flex justify-between items-center text-[10px] font-medium h-8 px-2 border-b border-[#BEDFFF]">
+                <span className="text-[#3A3A3A]">Subtotal</span>
+                <span className='text-[#0A0A0A]'>{formatCurrency(subtotal)}</span>
+              </div>
+              <div className="flex justify-between items-center text-[10px] font-medium h-8 px-2 border-b border-[#BEDFFF] bg-[#E5F2FF]">
+                <span className="text-[#3A3A3A]">Discount ({discountRate}%)</span>
+                <span className='text-[#0A0A0A]'>-{formatCurrency(discountAmount)}</span>
+              </div>
+              <div className="flex justify-between items-center text-[10px] font-medium h-8 px-2 border-b border-[#BEDFFF]">
+                <span className="text-[#3A3A3A]">Tax ({taxRate}%)</span>
+                <span className='text-[#0A0A0A]'>{formatCurrency(taxAmount)}</span>
+              </div>
+               <div className="flex justify-between items-center text-[10px] font-medium h-8 px-2 border-b border-[#BEDFFF] bg-[#E5F2FF]">
+                <span className="text-[#3A3A3A]">Total</span>
+                <span className='text-[#0A0A0A]'>{formatCurrency(total)}</span>
+              </div>
+              <div className="flex justify-between items-center text-[10px] font-medium h-8 px-2 border-b border-[#BEDFFF]">
+                <span className="text-[#3A3A3A]">Amount Paid</span>
+                <span className='text-[#0A0A0A]'>-{formatCurrency(amountPaid)}</span>
+              </div>
+              <div className="flex justify-between items-center h-8 px-2 bg-[#0554A7] text-white">
+                  <span className="font-medium text-xs">Amount Due</span>
+                  <span className="font-medium text-xs">{formatCurrency(amountDue)}</span>
+              </div>
             </div>
           </div>
          </section>
       )}
       
-      <FooterWave className="absolute bottom-0 left-0 w-full h-auto" />
-      <footer className="absolute bottom-0 left-0 w-full p-8 text-white z-10">
-          <div className="flex items-center gap-6 text-sm">
-            <div className="flex items-center gap-2">
-                <Phone size={14} />
-                <span>{from.phone}</span>
+      <FooterWave />
+      <footer className="absolute bottom-0 left-0 w-full p-4 text-white z-10">
+          <div className="flex flex-col gap-1">
+            <div className="flex items-center gap-1">
+                <div className="w-3.5 h-3.5 rounded-full bg-white/10 flex items-center justify-center">
+                  <Phone size={8} />
+                </div>
+                <span className='text-[10px] font-medium text-[#E9EAEB]'>{from.phone}</span>
             </div>
-            <div className="flex items-center gap-2">
-                <Mail size={14} />
-                <span>{from.email}</span>
+            <div className="flex items-center gap-1">
+                <div className="w-3.5 h-3.5 rounded-full bg-white/10 flex items-center justify-center">
+                  <Mail size={8} />
+                </div>
+                <span className='text-[10px] font-medium text-[#E9EAEB]'>{from.email}</span>
             </div>
           </div>
       </footer>

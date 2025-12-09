@@ -2,11 +2,9 @@ import { cn } from "@/lib/utils";
 
 export default function FooterWave({ className }: { className?: string }) {
     return (
-        <div className={cn("text-primary", className)}>
-            <svg width="794" height="150" viewBox="0 0 794 150" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M794 150H0V45C0 45 166 -18 397 45C628 108 794 45 794 45V150Z" fill="currentColor"/>
-                <path d="M0 70C0 70 132.5 23.5 293 70C453.5 116.5 661 57.5 794 87.5V45C794 45 628 108 397 45C166 -18 0 45 0 45V70Z" fill="white" fillOpacity="0.1"/>
-            </svg>
+        <div className={cn("absolute bottom-0 left-0 w-full h-[71px]", className)}>
+            <div className="absolute w-[595px] h-[71px] left-1/2 -translate-x-1/2 bottom-0" style={{background: 'linear-gradient(90.39deg, #0154A7 0.34%, #002141 103.25%)', boxShadow: '0px 0px 4px rgba(0, 0, 0, 0.25), inset 0px 4px 4px #034B93'}}/>
+            <div className="absolute w-[601.2px] h-[57.5px] left-1/2 -translate-x-1/2 bottom-0" style={{background: 'linear-gradient(90.52deg, #0154A7 1.51%, #002141 103.22%)', boxShadow: '0px 0px 4px rgba(0, 0, 0, 0.25), inset 0px 4px 4px #034B93'}}/>
         </div>
     );
 }
