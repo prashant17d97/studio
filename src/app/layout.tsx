@@ -1,7 +1,7 @@
-import type {Metadata} from 'next';
+import type { Metadata } from 'next';
 import './globals.css';
-import { Toaster } from "@/components/ui/toaster";
-import Header from '@/components/header';
+
+
 
 export const metadata: Metadata = {
   title: 'ProInvoice',
@@ -22,9 +22,7 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600&display=swap" rel="stylesheet" />
       </head>
       <body className="font-body antialiased">
-        <Header />
         <main>{children}</main>
-        <Toaster />
       </body>
     </html>
   );

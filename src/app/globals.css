@@ -4,13 +4,15 @@
 
 @layer base {
   :root {
-    --background: 220 40% 97%; /* Lighter gray-blue */
+    --background: 220 40% 97%;
+    /* Lighter gray-blue */
     --foreground: 220 25% 25%;
     --card: 0 0% 100%;
     --card-foreground: 220 25% 25%;
     --popover: 0 0% 100%;
     --popover-foreground: 220 25% 25%;
-    --primary: 212 99% 33%; /* #0154A7 */
+    --primary: 212 99% 33%;
+    /* #0154A7 */
     --primary-foreground: 0 0% 98%;
     --secondary: 217 60% 90%;
     --secondary-foreground: 220 25% 25%;
@@ -23,11 +25,6 @@
     --border: 217 30% 85%;
     --input: 0 0% 100%;
     --ring: 212 100% 41%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
     --radius: 0.5rem;
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -38,6 +35,7 @@
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
+
   .dark {
     --background: 220 15% 10%;
     --foreground: 0 0% 98%;
@@ -58,11 +56,6 @@
     --border: 220 15% 20%;
     --input: 220 15% 20%;
     --ring: 212 100% 50%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -78,6 +71,7 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -87,12 +81,16 @@
   body {
     background-color: white !important;
   }
+
   body * {
     visibility: hidden;
   }
-  .printable-area, .printable-area * {
+
+  .printable-area,
+  .printable-area * {
     visibility: visible;
   }
+
   .printable-area {
     position: relative;
     left: 0;
@@ -102,6 +100,7 @@
     padding: 0;
     margin: 0;
   }
+
   .print-page {
     page-break-after: always;
     break-after: page;
@@ -110,6 +109,7 @@
     margin: 0 !important;
     border-radius: 0 !important;
   }
+
   .no-print {
     display: none !important;
   }
@@ -120,10 +120,12 @@
   .invoice-header-bg {
     background: linear-gradient(88.43deg, #FFFFFF 5.81%, rgba(1, 84, 167, 0.2) 56.46%, rgba(1, 84, 167, 0.9) 75.91%, #0154A7 132.51%);
   }
+
   .invoice-footer-bg {
     background: linear-gradient(90.39deg, #0154A7 0.34%, #002141 103.25%);
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25), inset 0px 4px 4px #034B93;
   }
+
   .inter-tight {
     font-family: 'Inter Tight', sans-serif;
   }
