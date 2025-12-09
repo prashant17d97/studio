@@ -8,9 +8,21 @@ import InvoiceForm from '@/components/invoice-form';
 import InvoicePreview from '@/components/invoice-preview';
 import { Button } from '@/components/ui/button';
 import { Download, Save } from 'lucide-react';
+import { generatePDF } from '@/lib/pdf-utils';
 
 const defaultItems = [
   { confirmation: '41565-Schoemakpr', description: 'COLUMBARIUM-4 NICHE STANDARD\nCHINA ELB GRAY+BLACK DOORS\n3-Oct-5-2x2-0.5\nAll Polished + 2"Margin', quantity: 1, rate: 1250 },
+  { confirmation: '41565-Schoemakpr', description: 'FLUSH-6 NICHE STANDARD CHINA ELB\nGRAY+BLACK DOORS\n3-Oct-5-2x2-0.5\nAll Polished + 2"Margin', quantity: 1, rate: 1200 },
+  { confirmation: '41565-Schoemakpr', description: 'FLUSH-6 NICHE STANDARD CHINA ELB\nGRAY+BLACK DOORS\n3-Oct-5-2x2-0.5\nAll Polished + 2"Margin', quantity: 1, rate: 1200 },
+  { confirmation: '41565-Schoemakpr', description: 'FLUSH-6 NICHE STANDARD CHINA ELB\nGRAY+BLACK DOORS\n3-Oct-5-2x2-0.5\nAll Polished + 2"Margin', quantity: 1, rate: 1200 },
+  { confirmation: '41565-Schoemakpr', description: 'FLUSH-6 NICHE STANDARD CHINA ELB\nGRAY+BLACK DOORS\n3-Oct-5-2x2-0.5\nAll Polished + 2"Margin', quantity: 1, rate: 1200 },
+  { confirmation: '41565-Schoemakpr', description: 'FLUSH-6 NICHE STANDARD CHINA ELB\nGRAY+BLACK DOORS\n3-Oct-5-2x2-0.5\nAll Polished + 2"Margin', quantity: 1, rate: 1200 },
+  { confirmation: '41565-Schoemakpr', description: 'FLUSH-6 NICHE STANDARD CHINA ELB\nGRAY+BLACK DOORS\n3-Oct-5-2x2-0.5\nAll Polished + 2"Margin', quantity: 1, rate: 1200 },
+  { confirmation: '41565-Schoemakpr', description: 'FLUSH-6 NICHE STANDARD CHINA ELB\nGRAY+BLACK DOORS\n3-Oct-5-2x2-0.5\nAll Polished + 2"Margin', quantity: 1, rate: 1200 },
+  { confirmation: '41565-Schoemakpr', description: 'FLUSH-6 NICHE STANDARD CHINA ELB\nGRAY+BLACK DOORS\n3-Oct-5-2x2-0.5\nAll Polished + 2"Margin', quantity: 1, rate: 1200 },
+  { confirmation: '41565-Schoemakpr', description: 'FLUSH-6 NICHE STANDARD CHINA ELB\nGRAY+BLACK DOORS\n3-Oct-5-2x2-0.5\nAll Polished + 2"Margin', quantity: 1, rate: 1200 },
+  { confirmation: '41565-Schoemakpr', description: 'FLUSH-6 NICHE STANDARD CHINA ELB\nGRAY+BLACK DOORS\n3-Oct-5-2x2-0.5\nAll Polished + 2"Margin', quantity: 1, rate: 1200 },
+  { confirmation: '41565-Schoemakpr', description: 'FLUSH-6 NICHE STANDARD CHINA ELB\nGRAY+BLACK DOORS\n3-Oct-5-2x2-0.5\nAll Polished + 2"Margin', quantity: 1, rate: 1200 },
   { confirmation: '41565-Schoemakpr', description: 'FLUSH-6 NICHE STANDARD CHINA ELB\nGRAY+BLACK DOORS\n3-Oct-5-2x2-0.5\nAll Polished + 2"Margin', quantity: 1, rate: 1200 },
 ];
 
@@ -46,7 +58,7 @@ export default function Home() {
   const invoiceData = form.watch();
 
   const handlePrint = () => {
-    window.print();
+    generatePDF(`invoice-${invoiceData.invoiceNumber || '00000'}.pdf`);
   };
 
   return (
