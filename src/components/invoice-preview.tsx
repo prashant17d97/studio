@@ -39,7 +39,7 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
 
   const renderPage = (chunk: typeof items, pageIndex: number, isLastPage: boolean) => (
     <Card key={pageIndex} className="w-[595px] h-[842px] mx-auto bg-white shadow-lg print-page flex flex-col relative overflow-hidden font-sans">
-      <div className='flex-grow flex flex-col'>
+      <div className='flex-1 flex flex-col'>
         <HeaderWave className="absolute top-0 left-0 w-full h-auto" />
         <header className="flex justify-between items-start pt-[23px] px-[29px] z-10">
           <div className="flex items-center gap-1">
@@ -103,28 +103,28 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
             </TableBody>
           </Table>
         </section>
-      </div>
       
-      {isLastPage && (
-        <section className="mt-auto px-[24px] pb-[90px] z-10">
-          <div className="flex justify-end">
-              <div className="w-[233px]">
-                <div className="flex justify-between items-center text-[10px] font-medium h-8 px-2 border-b border-[#BEDFFF]">
-                  <span className="text-[#3A3A3A]">Subtotal</span>
-                  <span className='text-[#0A0A0A]'>{formatCurrency(subtotal)}</span>
+        {isLastPage && (
+          <section className="mt-auto px-[24px] z-10 pb-[90px]">
+            <div className="flex justify-end">
+                <div className="w-[233px]">
+                  <div className="flex justify-between items-center text-[10px] font-medium h-8 px-2 border-b border-[#BEDFFF]">
+                    <span className="text-[#3A3A3A]">Subtotal</span>
+                    <span className='text-[#0A0A0A]'>{formatCurrency(subtotal)}</span>
+                  </div>
+                  <div className="flex justify-between items-center text-[10px] font-medium h-8 px-2 border-b border-[#BEDFFF]">
+                    <span className="text-[#3A3A3A]">Amount Paid</span>
+                    <span className='text-[#0A0A0A]'>-{formatCurrency(amountPaid)}</span>
+                  </div>
+                  <div className="flex justify-between items-center h-8 px-2 bg-[#0554A7] text-white">
+                      <span className="font-medium text-xs">Amount Due</span>
+                      <span className="font-medium text-xs">{formatCurrency(amountDue)}</span>
+                  </div>
                 </div>
-                <div className="flex justify-between items-center text-[10px] font-medium h-8 px-2 border-b border-[#BEDFFF]">
-                  <span className="text-[#3A3A3A]">Amount Paid</span>
-                  <span className='text-[#0A0A0A]'>-{formatCurrency(amountPaid)}</span>
-                </div>
-                <div className="flex justify-between items-center h-8 px-2 bg-[#0554A7] text-white">
-                    <span className="font-medium text-xs">Amount Due</span>
-                    <span className="font-medium text-xs">{formatCurrency(amountDue)}</span>
-                </div>
-              </div>
-          </div>
-        </section>
-      )}
+            </div>
+          </section>
+        )}
+      </div>
       
       <FooterWave className="absolute bottom-0 left-0 w-full h-auto" />
       <footer className="absolute bottom-0 left-0 w-full p-4 text-white z-10">
