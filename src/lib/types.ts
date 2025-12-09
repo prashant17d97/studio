@@ -1,4 +1,5 @@
 export interface LineItem {
+  confirmation: string;
   description: string;
   quantity: number;
   rate: number;
@@ -9,6 +10,7 @@ export interface Company {
   address: string;
   email: string;
   logoUrl?: string;
+  phone?: string;
 }
 
 export interface Client {
@@ -27,4 +29,5 @@ export interface Invoice {
   notes: string;
   taxRate: number;
   discountRate: number;
+  amountPaid: number;
 }
