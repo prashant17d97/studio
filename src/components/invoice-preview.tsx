@@ -15,7 +15,7 @@ interface InvoicePreviewProps {
   data: Invoice;
 }
 
-const ITEMS_PER_PAGE = 8; // Adjusted to fit new design
+const ITEMS_PER_PAGE = 10; // Can be adjusted based on needs
 
 export default function InvoicePreview({ data }: InvoicePreviewProps) {
   const { from, to, invoiceNumber, invoiceDate, dueDate, items = [], amountPaid = 0, taxRate = 0, discountRate = 0 } = data;
@@ -36,11 +36,11 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
   const amountDue = total - amountPaid;
 
   const renderPage = (chunk: typeof items, pageIndex: number, isLastPage: boolean) => (
-    <Card key={pageIndex} className="w-[595px] h-[842px] mx-auto bg-[#F7F7F7] shadow-lg print-page flex flex-col relative overflow-hidden font-sans">
+    <Card key={pageIndex} className="w-[595px] min-h-[842px] mx-auto bg-white shadow-lg print-page flex flex-col relative overflow-hidden font-sans">
       <HeaderWave />
       <header className="flex justify-between items-start pt-[23px] px-[29px] z-10">
         <div className="flex items-center gap-1">
-          <Logo />
+           <Logo className="w-[156.8px] h-[29px]" />
         </div>
         <div className="text-right">
           <div className="flex flex-col items-end gap-4">
@@ -87,7 +87,7 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
           <TableBody>
             {chunk.map((item, index) => (
               <TableRow key={index} className='border-b border-[#BEDFFF]'>
-                <TableCell className="text-[10px] font-medium text-[#414141] text-center align-top p-2 border-x border-[#BEDFFF] h-[80px]">{item.confirmation}</TableCell>
+                <TableCell className="text-[10px] font-medium text-[#414141] text-center align-top p-2 border-x border-[#BEDFFF] min-h-[80px]">{item.confirmation}</TableCell>
                 <TableCell className="text-[10px] font-medium text-[#414141] align-top p-2 border-r border-[#BEDFFF] whitespace-pre-wrap">
                   <div>{item.description}</div>
                   <div className="text-[#4A5565] font-normal">{/* Placeholder for second line from figma */}</div>
@@ -95,16 +95,6 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
                 <TableCell className="text-[10px] font-medium text-[#414141] text-center align-top p-2 border-r border-[#BEDFFF]">{formatCurrency(item.rate)}</TableCell>
                 <TableCell className="text-[10px] font-medium text-[#414141] text-center align-top p-2 border-r border-[#BEDFFF]">{item.quantity}</TableCell>
                 <TableCell className="text-[10px] font-medium text-[#414141] text-center align-top p-2 border-r border-[#BEDFFF]">{formatCurrency(item.quantity * item.rate)}</TableCell>
-              </TableRow>
-            ))}
-             {/* Fill empty rows to maintain height */}
-            {Array.from({ length: ITEMS_PER_PAGE - chunk.length }).map((_, index) => (
-              <TableRow key={`empty-${index}`} className="border-b border-[#BEDFFF]">
-                <TableCell className="h-[80px] p-2 border-x border-[#BEDFFF]"></TableCell>
-                <TableCell className="h-[80px] p-2 border-r border-[#BEDFFF]"></TableCell>
-                <TableCell className="h-[80px] p-2 border-r border-[#BEDFFF]"></TableCell>
-                <TableCell className="h-[80px] p-2 border-r border-[#BEDFFF]"></TableCell>
-                <TableCell className="h-[80px] p-2 border-r border-[#BEDFFF]"></TableCell>
               </TableRow>
             ))}
           </TableBody>
