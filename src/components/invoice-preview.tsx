@@ -26,6 +26,7 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
       itemChunks.push(items.slice(i, i + ITEMS_PER_PAGE));
     }
   } else {
+    // Make sure there is always at least one page, even if there are no items
     itemChunks.push([]);
   }
 
@@ -36,8 +37,8 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
   const amountDue = total - amountPaid;
 
   const renderPage = (chunk: typeof items, pageIndex: number, isLastPage: boolean) => (
-    <Card key={pageIndex} className="w-[595px] min-h-[842px] mx-auto bg-white shadow-lg print-page flex flex-col relative overflow-hidden font-sans">
-      <HeaderWave />
+    <Card key={pageIndex} className="w-[595px] h-[842px] mx-auto bg-white shadow-lg print-page flex flex-col relative overflow-hidden font-sans">
+      <HeaderWave className="absolute top-0 left-0 w-full h-auto" />
       <header className="flex justify-between items-start pt-[23px] px-[29px] z-10">
         <div className="flex items-center gap-1">
            <Logo className="w-[156.8px] h-[29px]" />
@@ -66,7 +67,7 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
                 <h3 className="text-xs font-medium text-[#0554A7]">Bill To :</h3>
                 <div className='flex flex-col gap-1'>
                   <p className="font-semibold text-[10px] text-[#3A3A3A]">{to?.name || 'Client Name'}</p>
-                  <p className="text-[10px] text-[#313131] whitespace-pre-wrap leading-3">{to?.address}</p>
+                  <p className="text-[10px] text-[#313131] whitespace-pre-wrap leading-tight">{to?.address}</p>
                 </div>
               </div>
             </div>
@@ -87,7 +88,7 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
           <TableBody>
             {chunk.map((item, index) => (
               <TableRow key={index} className='border-b border-[#BEDFFF]'>
-                <TableCell className="text-[10px] font-medium text-[#414141] text-center align-top p-2 border-x border-[#BEDFFF] min-h-[80px]">{item.confirmation}</TableCell>
+                <TableCell className="text-[10px] font-medium text-[#414141] text-center align-top p-2 border-x border-[#BEDFFF]">{item.confirmation}</TableCell>
                 <TableCell className="text-[10px] font-medium text-[#414141] align-top p-2 border-r border-[#BEDFFF] whitespace-pre-wrap">
                   <div>{item.description}</div>
                   <div className="text-[#4A5565] font-normal">{/* Placeholder for second line from figma */}</div>
@@ -134,7 +135,7 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
          </section>
       )}
       
-      <FooterWave />
+      <FooterWave className="absolute bottom-0 left-0 w-full h-auto" />
       <footer className="absolute bottom-0 left-0 w-full p-4 text-white z-10">
           <div className="flex flex-col gap-1">
             <div className="flex items-center gap-1">
