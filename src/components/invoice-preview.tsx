@@ -60,7 +60,7 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
           </div>
         </header>
 
-        <main className="flex-1 flex flex-col px-[24px] z-10 mt-[89px] mb-[90px]">
+        <main className="flex-1 flex flex-col px-[24px] z-10 mt-[89px] pb-[90px]">
           <section className="mb-8">
             <div className="grid grid-cols-2">
                 <div>
@@ -105,7 +105,7 @@ export default function InvoicePreview({ data }: InvoicePreviewProps) {
           </section>
         
           {isLastPage && (
-            <section className="mt-auto">
+            <section className="mt-auto pt-4">
               <div className="flex justify-end">
                   <div className="w-[233px]">
                     <div className="flex justify-between items-center text-[10px] font-medium h-8 px-2 border-b border-t border-[#BEDFFF]">
