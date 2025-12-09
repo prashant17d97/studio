@@ -16,13 +16,14 @@ export const generatePDF = async (filename: string = 'invoice.pdf') => {
 
         // Create canvas from the element
         const canvas = await html2canvas(page, {
-            scale: 2, // Higher scale for better resolution
+            scale: 3, // Increased scale for better text sharpness
             useCORS: true,
             logging: false,
             backgroundColor: '#ffffff'
         });
 
-        const imgData = canvas.toDataURL('image/png');
+        // Use JPEG instead of PNG for massive size reduction
+        const imgData = canvas.toDataURL('image/jpeg', 0.95);
 
         // A4 dimensions in mm
         const pdfWidth = 210;
@@ -32,7 +33,7 @@ export const generatePDF = async (filename: string = 'invoice.pdf') => {
             pdf.addPage();
         }
 
-        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
     }
 
     pdf.save(filename);
